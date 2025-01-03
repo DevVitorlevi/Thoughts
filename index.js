@@ -7,6 +7,8 @@ const flash = require('express-flash'); // Para exibir mensagens temporárias (f
 const FileStore = require('session-file-store')(session); // Armazena sessões em arquivos
 const User = require('./models/User')
 const Tougth = require('./models/Tougths')
+const TougthRouters = require("./routers/TougthRouters")
+
 
 // Inicializa a aplicação Express
 const app = express();
@@ -52,7 +54,7 @@ app.use((req, res, next) => {
 });
 
 // Rotas
-
+app.use('/tougth', TougthRouters)
 
 // Conecta ao banco de dados e inicia o servidor
 conn.sync()
