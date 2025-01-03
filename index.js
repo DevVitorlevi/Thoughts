@@ -5,6 +5,8 @@ const conn = require('./db/conn'); // Arquivo de conexão ao banco de dados
 const session = require('express-session'); // Gerenciamento de sessões
 const flash = require('express-flash'); // Para exibir mensagens temporárias (flash)
 const FileStore = require('session-file-store')(session); // Armazena sessões em arquivos
+const User = require('./models/User')
+const Tougth = require('./models/Tougths')
 
 // Inicializa a aplicação Express
 const app = express();
@@ -50,7 +52,7 @@ app.use((req, res, next) => {
 });
 
 // Rotas
-app.use('/tougths', TougthsRouters);
+
 
 // Conecta ao banco de dados e inicia o servidor
 conn.sync()
