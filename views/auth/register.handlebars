@@ -1,1 +1,30 @@
-<h1>register</h1>
+<link rel="stylesheet" href="/css/register.css">
+<main>
+    <div class="container">
+        <h1>Registrar</h1>
+        <form action="/register" method="POST">
+            <div class="inputs">
+                <input type="text" name="name"  class="input" required>
+                <label>Nome de Usuário</label>
+                <span class="required">Campo Obrigatório</span>
+            </div>
+            <div class="inputs">
+                <input type="text" name="name"  class="input" required>
+                <label>Email do Usuário</label>
+                <span class="required">E-mail Inválido</span>
+            </div>
+            <div class="inputs">
+                <input type="password" name="name"  class="input" required>
+                <label>Senha do Usuário</label>
+                <span class="required">Senha Deve Ter no Minimo 8 Caracteres</span>
+            </div>
+            <div class="inputs">
+                <input type="password" name="name"  class="input" required>
+                <label>Confime a senha</label>
+                <span class="required">Senha não Coincidem</span>
+            </div>
+            <button type="submit">Cadastre</button>
+        </form>
+        <p>Já Possui Uma Conta?<a href="/login">Entre</a></p>
+    </div>
+</main>
