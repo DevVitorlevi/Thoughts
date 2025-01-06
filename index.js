@@ -54,7 +54,7 @@ app.use((req, res, next) => {
 });
 
 // Rotas
-app.use('/tougth', ThoughtRouters)
+app.use('/thoughts', ThoughtRouters)
 
 // Conecta ao banco de dados e inicia o servidor
 conn.sync()

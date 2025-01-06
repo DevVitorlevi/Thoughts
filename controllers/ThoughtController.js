@@ -4,6 +4,6 @@ const Tougth = require('../models/Thought')
 module.exports = class ThoughtController {
     static async allThought(req,res){
         
-        res.render('toughts/home')
+        res.render('thougths/home')
     }
 }
