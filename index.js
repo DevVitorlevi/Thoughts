@@ -8,6 +8,7 @@ const FileStore = require('session-file-store')(session); // Armazena sessões e
 const User = require('./models/User')
 const Thought = require('./models/Thought')
 const ThoughtRouters = require("./routers/ThoughtRouters")
+const AuthRoutes = require("./routers/AuthRoutes")
 
 
 // Inicializa a aplicação Express
@@ -55,6 +56,7 @@ app.use((req, res, next) => {
 
 // Rotas
 app.use('/thoughts', ThoughtRouters)
+app.use('/', AuthRoutes)
 
 // Conecta ao banco de dados e inicia o servidor
 conn.sync()
