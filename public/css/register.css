@@ -60,9 +60,8 @@ input:focus{
 }
 .inputs i{
     position: absolute;
-    top: 50%;
+    top:14px;
     right: 15px;
-    transform: translateY(-50%);
     font-size: 25px;
     color: orange;
 
