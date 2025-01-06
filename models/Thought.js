@@ -3,14 +3,14 @@ const db = require('../db/conn')
 
 const User = require('./User')
 
-const Tougth = db.define('Tougth',{
+const Thought = db.define('Thought',{
     title:{
         type:DataTypes.STRING,
         allowNull:false
     }
 })
 
-Tougth.belongsTo(User)
-User.hasMany(Tougth)
+Thought.belongsTo(User)
+User.hasMany(Thought)
 
-module.exports = Tougth
+module.exports = Thought

@@ -6,8 +6,8 @@ const session = require('express-session'); // Gerenciamento de sessões
 const flash = require('express-flash'); // Para exibir mensagens temporárias (flash)
 const FileStore = require('session-file-store')(session); // Armazena sessões em arquivos
 const User = require('./models/User')
-const Tougth = require('./models/Tougths')
-const TougthRouters = require("./routers/TougthRouters")
+const Thought = require('./models/Thought')
+const ThoughtRouters = require("./routers/ThoughtRouters")
 
 
 // Inicializa a aplicação Express
@@ -54,7 +54,7 @@ app.use((req, res, next) => {
 });
 
 // Rotas
-app.use('/tougth', TougthRouters)
+app.use('/tougth', ThoughtRouters)
 
 // Conecta ao banco de dados e inicia o servidor
 conn.sync()
