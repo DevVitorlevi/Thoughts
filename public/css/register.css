@@ -1,10 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 main{
     width: 98vw;
-    height: 95vh;
-    color: white;
+    height: 87vh;
+    color: rgb(0, 0, 0);
     display: flex;
     justify-content: center;
     align-items: center;
+    font-family: "Montserrat", serif;
 }
 .container{
     display: flex;
@@ -12,5 +14,81 @@ main{
     align-items: center;
     justify-content: center;
     padding: 20px;
-    background-color: rgb(0, 0, 0);
+    background-color: beige;
+    width: 30%;
+    gap: 20px;
+    border-radius:10px;
+    box-shadow: 0px 0px 12px 4px rgba(255, 255, 255, 0.404);
+}
+form{
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    gap: 10px;
+
+}
+.inputs{
+    position: relative;
+}
+.input{
+    width: 100%;
+    padding: 20px 15px 10px 5px;
+    font-size: 17px;
+    border-radius: 5px;
+    border: 2px solid rgb(255, 196, 0);
+    outline: none;
+    text-indent: 10px;
+
+}
+.inputs label{
+    position: absolute;
+    top:18px ;
+    left: 14px;
+    font-size: 17px;
+    pointer-events: none;
+    color: rgb(167, 165, 165);
+
+}
+.inputs input:focus ~ label,.inputs input:valid ~ label
+{
+    top: 5px;
+    transition: 0.5s;
+    font-size: 13px;
+}
+input:focus{
+    outline: 1px solid rgb(255, 196, 0) ;
+}
+.inputs i{
+    position: absolute;
+    top: 50%;
+    right: 15px;
+    transform: translateY(-50%);
+    font-size: 25px;
+    color: orange;
+
+}
+button{
+    width: 50%;
+    background-color: goldenrod;
+    color: white;
+    font-weight: bold;
+    border: 0;
+    border-radius: 5px;
+    padding: 10px;
+    margin: auto;
+    cursor: pointer;
+}
+a{
+    text-decoration: none;
+    color: rgb(255, 183, 0);
+}
+a:hover{
+    text-decoration: underline;
+}
+.required{
+    color: red;
+    font-size: 15px;
+    display:none;
+    margin-top: 7px;
+    text-indent: 10px;
 }
