@@ -113,8 +113,14 @@
     <nav>
         <ul>
             <li class="nav-item"><a href="/">Pensamentos</a></li>
+
+        {{#if session.userid}}
+            <li class="nav-item"><a href="/thoughts">Postar Pensamentos</a></li>
+            <li class="nav-item"><a href="/logout">Sair</a></li>
+        {{else}}
             <li class="nav-item"><a href="/">Entre</a></li>
             <li class="nav-item"><a href="/register">Crie sua conta</a></li>
+        {{/if}}
         </ul>
     </nav>
     </header>

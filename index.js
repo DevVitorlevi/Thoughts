@@ -47,12 +47,13 @@ app.use(express.static('public'));
 
 // Middleware para adicionar dados à variável `res.locals`
 app.use((req, res, next) => {
+    res.locals.messages = req.flash(); // Adiciona mensagens flash ao contexto global
     if (req.session.userid) {
         res.locals.session = req.session;
     }
-    res.locals.messages = req.flash(); // Adiciona mensagens flash ao contexto global
     next();
 });
+
 
 // Rotas
 app.use('/thoughts', ThoughtRouters);
