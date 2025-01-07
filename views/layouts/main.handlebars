@@ -82,8 +82,12 @@
         </ul>
     </nav>
     </header>
+    <div class="message">
+        {{#if messages.message}}
+            {{messages.message}}
+        {{/if}}
+    </div>
     {{{body}}}
-    <footer><span>Tougths</span>&copy 2024</footer>
-
+    <footer><span>Tougths</span> &copy2024</footer>
 </body>
 </html>
