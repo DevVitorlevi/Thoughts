@@ -6,4 +6,6 @@ module.exports = class ThoughtController {
         
         res.render('thoughts/home')
     }
+
+    
 }
