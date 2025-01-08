@@ -1,1 +1,22 @@
-<h1>login</h1>
+<link rel="stylesheet" href="/css/register.css">
+<main>
+    <div class="container">
+        <h1>Login</h1>
+        <form action="/login" method="POST" id="form">
+            <div class="inputs">
+                <input type="text" name="email"  class="input" required>
+                <label>Email do Usuário</label>
+                <span class="required">E-mail Inválido</span>
+            </div>
+            <div class="inputs">
+                <input type="password" name="password"  class="input" id="pass" required>
+                <label>Senha do Usuário</label>
+                <i class="bi bi-eye"></i>
+                <span class="required">Senha Inválida</span>
+            </div>
+            <button type="submit">Entre</button>
+        </form>
+        <p>Não Tem uma Conta?<a href="/register">Crie</a></p>
+    </div>
+</main>
+<script src="/js/index2.js"></script>
