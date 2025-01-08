@@ -1,65 +1,64 @@
 // Importa as bibliotecas necessárias
-const express = require('express');
-const exphbs = require('express-handlebars');
-const conn = require('./db/conn');
-const session = require('express-session');
-const flash = require('express-flash');
-const FileStore = require('session-file-store')(session);
-const User = require('./models/User');
-const Thought = require('./models/Thought');
-const ThoughtRouters = require("./routers/ThoughtRouters");
-const AuthRoutes = require("./routers/AuthRoutes");
+const express = require('express'); // Framework para criação de servidores web
+const exphbs = require('express-handlebars'); // Biblioteca para gerenciar templates HTML
+const conn = require('./db/conn'); // Conexão com o banco de dados
+const session = require('express-session'); // Gerenciamento de sessões de usuário
+const flash = require('express-flash'); // Para exibir mensagens temporárias (flash messages)
+const FileStore = require('session-file-store')(session); // Armazena sessões em arquivos temporários no servidor
+const User = require('./models/User'); // Modelo para interagir com a tabela de usuários no banco de dados
+const Thought = require('./models/Thought'); // Modelo para interagir com a tabela de pensamentos
+const ThoughtRouters = require("./routers/ThoughtRouters"); // Rotas relacionadas a pensamentos
+const AuthRoutes = require("./routers/AuthRoutes"); // Rotas relacionadas à autenticação
 
 // Inicializa a aplicação Express
 const app = express();
 
 // Configuração do Handlebars como motor de templates
-app.engine('handlebars', exphbs.engine());
-app.set('view engine', 'handlebars');
+app.engine('handlebars', exphbs.engine()); // Define o Handlebars como o motor de templates
+app.set('view engine', 'handlebars'); // Configura o Handlebars como padrão para renderização de views
 
 // Middleware para processar dados enviados pelo cliente
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
+app.use(express.urlencoded({ extended: true })); // Permite processar dados de formulários enviados via POST
+app.use(express.json()); // Permite processar dados enviados no formato JSON
 
 // Configuração de sessões
 app.use(session({
-    name: 'session',
-    secret: 'nosso_secret',
-    resave: false,
-    saveUninitialized: false,
-    store: new FileStore({
-        logFn: function () {},
-        path: require('path').join(require('os').tmpdir(), 'sessions'),
+    name: 'session', // Nome do cookie de sessão
+    secret: 'nosso_secret', // Chave secreta para assinar o cookie
+    resave: false, // Não salva a sessão novamente se ela não foi alterada
+    saveUninitialized: false, // Não salva sessões que ainda não possuem dados
+    store: new FileStore({ // Define o armazenamento das sessões em arquivos temporários
+        logFn: function () {}, // Desativa logs de operações de sessão
+        path: require('path').join(require('os').tmpdir(), 'sessions'), // Caminho para armazenar os arquivos de sessão
     }),
     cookie: {
-        secure: false,
-        maxAge: 360000,
-        expires: new Date(Date.now() + 360000),
-        httpOnly: true
+        secure: false, // O cookie não requer HTTPS (deve ser true em produção)
+        maxAge: 360000, // Tempo de vida do cookie em milissegundos (6 minutos)
+        expires: new Date(Date.now() + 360000), // Define a data de expiração do cookie
+        httpOnly: true // Impede que o cookie seja acessado pelo JavaScript no navegador
     }
 }));
 
 // Configuração do middleware de mensagens flash
-app.use(flash());
+app.use(flash()); // Permite exibir mensagens temporárias (ex.: sucesso, erro)
 
 // Middleware para servir arquivos estáticos
-app.use(express.static('public'));
+app.use(express.static('public')); // Define a pasta "public" para arquivos estáticos (CSS, imagens, etc.)
 
 // Middleware para adicionar dados à variável `res.locals`
 app.use((req, res, next) => {
-    res.locals.messages = req.flash(); // Adiciona mensagens flash ao contexto global
+    res.locals.messages = req.flash(); // Adiciona mensagens flash ao escopo global das views
     if (req.session.userid) {
-        res.locals.session = req.session;
+        res.locals.session = req.session; // Adiciona a sessão ao contexto global, se houver um usuário logado
     }
-    next();
+    next(); // Prossegue para o próximo middleware ou rota
 });
 
-
 // Rotas
-app.use('/thoughts', ThoughtRouters);
-app.use('/', AuthRoutes);
+app.use('/thoughts', ThoughtRouters); // Rotas relacionadas a pensamentos (ex.: criação, exibição)
+app.use('/', AuthRoutes); // Rotas relacionadas à autenticação (ex.: login, registro)
 
 // Conecta ao banco de dados e inicia o servidor
-conn.sync()
-    .then(() => app.listen(3000))
-    .catch(e => console.log(e));
+conn.sync() // Sincroniza os modelos com o banco de dados
+    .then(() => app.listen(3000)) // Inicia o servidor na porta 3000 após conectar ao banco
+    .catch(e => console.log(e)); // Exibe um erro no console caso a conexão falhe

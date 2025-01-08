@@ -1,43 +1,66 @@
-const bcrypt = require('bcryptjs')
-const User = require('../models/User')
+// Importando o bcrypt para hashing de senhas
+const bcrypt = require('bcryptjs');
+
+// Importando o modelo User para interagir com o banco de dados
+const User = require('../models/User');
+
+// Exportando a classe AuthController
 module.exports = class AuthController {
-    static login(req,res){
-        res.render('auth/login')
+    
+    // Método para exibir a página de login
+    static login(req, res) {
+        res.render('auth/login'); // Renderiza a página de login
     }
-    static register(req,res){
-        res.render('auth/register')
+
+    // Método para exibir a página de registro
+    static register(req, res) {
+        res.render('auth/register'); // Renderiza a página de registro
     }
 
-            static async registerPost(req,res){
-                const {name,email,password} = req.body
+    // Método para lidar com o registro de um novo usuário
+    static async registerPost(req, res) {
+        // Extraindo as informações enviadas pelo formulário
+        const { name, email, password } = req.body;
 
-                const CheckEmailExists = await User.findOne({where:{email}})
+        // Verificando se o e-mail já está cadastrado no banco de dados
+        const CheckEmailExists = await User.findOne({ where: { email } });
 
-                if(CheckEmailExists){
-                    req.flash('message','E-mail Já Cadastrado')
-                    res.render('auth/register')
-                    
-                    return
-                }
-                const salt = bcrypt.genSaltSync(10)
-                const hashedPassword = bcrypt.hashSync(password,salt)
+        if (CheckEmailExists) {
+            // Caso o e-mail já exista, exibe uma mensagem de erro e renderiza novamente a página de registro
+            req.flash('message', 'E-mail Já Cadastrado');
+            res.render('auth/register');
+            return; // Interrompe a execução para evitar criar o usuário
+        }
 
-                const user = {
-                    name,
-                    email,
-                    password: hashedPassword
-                }
-                try{
-                    const createdUser = await User.create(user)
-                    req.session.userid = createdUser.id
-                    console.log('Flash message:', req.flash('message'));
-                    setTimeout(()=>req.session.save(()=>{
+        // Gerando um salt e criando um hash para a senha do usuário
+        const salt = bcrypt.genSaltSync(10); // Gera um salt com fator de complexidade 10
+        const hashedPassword = bcrypt.hashSync(password, salt); // Cria o hash da senha
 
-                        res.redirect('/thoughts')
-                    }),5000)
-                }
-                catch(err){
-                    console.log(err)
-                }
-            }
-}
+        // Criando o objeto do usuário a ser salvo no banco de dados
+        const user = {
+            name,
+            email,
+            password: hashedPassword // Armazena apenas a senha criptografada
+        };
+
+        try {
+            // Criando o usuário no banco de dados
+            const createdUser = await User.create(user);
+
+            // Salvando o ID do usuário na sessão para manter o usuário logado
+            req.session.userid = createdUser.id;
+
+            // Mensagem para testes no console
+            console.log('Flash message:', req.flash('message'));
+
+            // Salva a sessão e redireciona o usuário para a página de pensamentos (thoughts)
+            setTimeout(() => req.session.save(() => {
+                res.redirect('/thoughts'); // Redireciona para a página principal do aplicativo
+            }), 5000); // Atraso de 5 segundos (pode ser ajustado ou removido)
+
+        } catch (err) {
+            // Exibe um erro no console em caso de falha
+            console.log(err);
+        }
+    }
+};

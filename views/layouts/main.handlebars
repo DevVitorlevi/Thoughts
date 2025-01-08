@@ -114,23 +114,35 @@
         <ul>
             <li class="nav-item"><a href="/">Pensamentos</a></li>
 
-        {{#if session.userid}}
-            <li class="nav-item"><a href="/thoughts">Postar Pensamentos</a></li>
-            <li class="nav-item"><a href="/logout">Sair</a></li>
-        {{else}}
-            <li class="nav-item"><a href="/">Entre</a></li>
-            <li class="nav-item"><a href="/register">Crie sua conta</a></li>
-        {{/if}}
+{{#if session.userid}}
+    <!-- Se o usuário estiver logado (ou seja, a sessão contém um `userid`): -->
+    <li class="nav-item">
+        <a href="/thoughts">Postar Pensamentos</a> <!-- Link para postar pensamentos -->
+    </li>
+    <li class="nav-item">
+        <a href="/logout">Sair</a> <!-- Link para logout -->
+    </li>
+{{else}}
+    <!-- Se o usuário NÃO estiver logado: -->
+    <li class="nav-item">
+        <a href="/">Entre</a> <!-- Link para a página de login -->
+    </li>
+    <li class="nav-item">
+        <a href="/register">Crie sua conta</a> <!-- Link para a página de registro -->
+    </li>
+{{/if}}
         </ul>
     </nav>
     </header>
     <div class="flash-message">
-        {{#if messages.message}}
-            {{#each messages.message}}
-                <div class="flash-card">{{this}}</div>
-            {{/each}}
-        {{/if}}
-    </div>
+    {{#if messages.message}}
+        <!-- Se houver mensagens flash armazenadas em `messages.message` -->
+        {{#each messages.message}}
+            <!-- Itera sobre cada mensagem na lista de mensagens -->
+            <div class="flash-card">{{this}}</div> <!-- Exibe a mensagem dentro de um cartão -->
+        {{/each}}
+    {{/if}}
+</div>
 
 
     {{{body}}}
