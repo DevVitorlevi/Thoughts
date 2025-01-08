@@ -62,5 +62,11 @@ module.exports = class AuthController {
             // Exibe um erro no console em caso de falha
             console.log(err);
         }
+    
+    
+    }
+    static logout(req,res){
+        req.session.destroy()// Destoi a sessão do usuário
+        res.redirect('/login')//redireciona para o login
     }
 };
