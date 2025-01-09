@@ -21,7 +21,7 @@ app.set('view engine', 'handlebars');
 app.use(express.urlencoded({ extended: true })); // Permite processar dados de formulários enviados via POST
 app.use(express.json()); // Permite processar dados enviados no formato JSON
 
-// Configuração de sessões
+
 app.use(session({
     name: 'session', // Nome do cookie de sessão
     secret: 'nosso_secret', // Chave secreta para assinar o cookie
@@ -29,15 +29,15 @@ app.use(session({
     saveUninitialized: false, // Não salva sessões que ainda não possuem dados
     store: new FileStore({ // Define o armazenamento das sessões em arquivos temporários
         logFn: function () {}, // Desativa logs de operações de sessão
-        path: require('path').join(require('os').tmpdir(), 'sessions'), // Caminho para armazenar os arquivos de sessão
+        path: require('path').join(__dirname, 'sessions'), // Caminho para armazenar os arquivos de sessão
     }),
     cookie: {
-        secure: false, // O cookie não requer HTTPS (deve ser true em produção)
-        maxAge: 360000, // Tempo de vida do cookie em milissegundos (6 minutos)
-        expires: new Date(Date.now() + 360000), // Define a data de expiração do cookie
+        secure: process.env.NODE_ENV === 'production', // Apenas se HTTPS estiver ativado
+        maxAge: 3600000, // Tempo de vida do cookie (1 hora)
         httpOnly: true // Impede que o cookie seja acessado pelo JavaScript no navegador
     }
 }));
+
 
 // Configuração do middleware de mensagens flash
 app.use(flash()); // Permite exibir mensagens temporárias (ex.: sucesso, erro)
