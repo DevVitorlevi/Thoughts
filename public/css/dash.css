@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Abel&display=swap');
 #title{
-    font-size: 30px;
+    font-size: 40px;
     padding: 20px;
     color: white;
     font-family: "Abel", serif; 
@@ -17,6 +17,9 @@
     font-size: 18px;
     font-family: Arial, Helvetica, sans-serif;
     margin-top: 30px;
+    position: absolute;
+    right: 0;
+    top: 12%;
 
 }
 #thoughts:hover{
@@ -71,4 +74,10 @@ button{
 button >a {
     text-decoration: none;
     color: white;
+}
+p{
+    text-indent: 10px;
+    margin: 5px;
+    font-size: 20px;
+    font-family: "ABEL";
 }

@@ -19,8 +19,15 @@ module.exports = class ThoughtController {
                 }
             // Verifica se o usuário possui pensamentos relacionados
             const thoughts = user.Thoughts.map (thought => thought.dataValues);
+
+
+            let emptyThougth = false
+
+            if(thoughts.length === 0){
+                emptyThougth = true
+            }
     
-            res.render('thoughts/dashboard', { thoughts });
+            res.render('thoughts/dashboard', { thoughts ,emptyThougth});
     }
     static  createThought(req,res){
         res.render('thoughts/create')
