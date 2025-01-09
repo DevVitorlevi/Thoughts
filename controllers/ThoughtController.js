@@ -43,6 +43,16 @@ module.exports = class ThoughtController {
                 res.redirect('/thoughts/create'); // Redireciona mesmo em caso de erro
             });
         }
+
+    }
+    static async deleteThought(req,res){
+        const id = req.body.id
+        const userid = req.session.userid
+        await Thought.destroy({where:{id,userid}})
+        req.session.save(()=>{
+            res.redirect('/thoughts/dashboard')
+        })
+
     }
 
 

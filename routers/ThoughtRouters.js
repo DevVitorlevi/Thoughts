@@ -7,6 +7,7 @@ router.get('/',ThoughtController.allThought)
 router.get('/dashboard',checkAuth,ThoughtController.dashboard)
 router.get('/create', checkAuth, ThoughtController.createThought)
 router.post('/add',checkAuth, ThoughtController.addThought)
+router.post('/delete',checkAuth,ThoughtController.deleteThought)
 
 
 module.exports = router
