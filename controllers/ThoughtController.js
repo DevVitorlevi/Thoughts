@@ -62,6 +62,24 @@ module.exports = class ThoughtController {
 
     }
 
+    static async editThought(req,res){
+        const id = req.params.id
+        const userid = req.session.userid
 
+        const thought = await Thought.findOne({where:{id,userid},raw:true})
+        res.render('thoughts/edit',{thought})
+        
+    }
+    static async updateThought(req,res){
+        const id = req.body.id
+        const userid = req.session.userid
+        const Data = {
+            title:req.body.title,
+        }    
+
+        await Thought.update(Data,{where:{id,userid}})
+
+        res.redirect('/thoughts/dashboard')
+    }
     
 }
