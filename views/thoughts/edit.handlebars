@@ -1,0 +1,19 @@
+<link rel="stylesheet" href="/
+css/create.css">
+<main>
+    <div class="thought-container">
+        <h1>No que está Pensando:</h1>
+        <form action="/thoughts/update" method="POST">
+            <input type="hidden" name="id" value="{{thought.id}}">
+        <div class="inputs">
+            <input type="text" name="title" class="input" required value="{{thought.title}}">
+            <label>Pensamento Do Dia!!</label>
+        </div>
+
+        <div class="buttons">
+            <button type="submit">Editar Pensamento</button>
+            <a href="/thoughts/dashboard" id="voltar"><button type="button">Voltar</button></a>
+        </div>
+        </form>
+    </div>
+</main>
