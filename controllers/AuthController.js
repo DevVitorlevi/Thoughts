@@ -11,36 +11,35 @@ module.exports = class AuthController {
     static login(req, res) {
         res.render('auth/login'); // Renderiza a página de login
     }
-    static async loginPost(req,res){
-        const {email,password} = req.body
 
-        const UserExist = await User.findOne({where:{email:email}})// faz uma query em busca do email do usuário
+    static async loginPost(req, res) {
+        const { email, password } = req.body;
 
-        // Verifica se o usuario não existir ele envia uma flash message informando que o usuário nn foi encontrado
-        if(!UserExist){
-            req.flash('message', 'Usuário Não Encontrado')
-            res.render('auth/login')
+        try {
+            const userExist = await User.findOne({ where: { email } }); // Consulta o usuário pelo email
 
-            return
+            if (!userExist) {
+                req.flash('message', 'Usuário Não Encontrado');
+                return res.render('auth/login'); // Retorna imediatamente após renderizar
+            }
+
+            const passwordMatch = bcrypt.compareSync(password, userExist.password); // Compara as senhas
+
+            if (!passwordMatch) {
+                req.flash('message', 'Senha Incorreta');
+                return res.render('auth/login'); // Retorna imediatamente após renderizar
+            }
+
+            req.session.userid = userExist.id;
+
+            req.session.save(() => {
+                res.redirect('/thoughts'); // Redireciona o usuário para a página de pensamentos
+            });
+        } catch (err) {
+            console.error('Erro no login:', err);
+            res.status(500).send('Erro interno no servidor.');
         }
-
-        const PasswordMatch = bcrypt.compareSync(password, UserExist.password)//compara as senhas
-
-
-        // Verifica se as duas senhas batem 
-        if(!PasswordMatch){
-            req.flash('message','Senha Incorreta')
-            res.render('auth/login')
-            return
-        }
-
-        req.session.userid = UserExist.id
-
-        req.session.save(()=>{
-            res.redirect('/thoughts')
-        })
     }
-
 
     // Método para exibir a página de registro
     static register(req, res) {
@@ -49,54 +48,41 @@ module.exports = class AuthController {
 
     // Método para lidar com o registro de um novo usuário
     static async registerPost(req, res) {
-        // Extraindo as informações enviadas pelo formulário
         const { name, email, password } = req.body;
 
-        // Verificando se o e-mail já está cadastrado no banco de dados
-        const CheckEmailExists = await User.findOne({ where: { email } });
-
-        if (CheckEmailExists) {
-            // Caso o e-mail já exista, exibe uma mensagem de erro e renderiza novamente a página de registro
-            req.flash('message', 'E-mail Já Cadastrado');
-            res.render('auth/register');
-            return; // Interrompe a execução para evitar criar o usuário
-        }
-
-        // Gerando um salt e criando um hash para a senha do usuário
-        const salt = bcrypt.genSaltSync(10); // Gera um salt com fator de complexidade 10
-        const hashedPassword = bcrypt.hashSync(password, salt); // Cria o hash da senha
-
-        // Criando o objeto do usuário a ser salvo no banco de dados
-        const user = {
-            name,
-            email,
-            password: hashedPassword // Armazena apenas a senha criptografada
-        };
-
         try {
-            // Criando o usuário no banco de dados
+            const emailExists = await User.findOne({ where: { email } });
+
+            if (emailExists) {
+                req.flash('message', 'E-mail Já Cadastrado');
+                return res.render('auth/register'); // Retorna imediatamente após renderizar
+            }
+
+            const salt = bcrypt.genSaltSync(10);
+            const hashedPassword = bcrypt.hashSync(password, salt);
+
+            const user = {
+                name,
+                email,
+                password: hashedPassword
+            };
+
             const createdUser = await User.create(user);
 
-            // Salvando o ID do usuário na sessão para manter o usuário logado
             req.session.userid = createdUser.id;
 
-            // Mensagem para testes no console
-            console.log('Flash message:', req.flash('message'));
-
-            // Salva a sessão e redireciona o usuário para a página de pensamentos (thoughts)
-            setTimeout(() => req.session.save(() => {
-                res.redirect('/thoughts'); // Redireciona para a página principal do aplicativo
-            }), 5000); // Atraso de 5 segundos (pode ser ajustado ou removido)
-
+            req.session.save(() => {
+                res.redirect('/thoughts'); // Redireciona o usuário para a página principal
+            });
         } catch (err) {
-            // Exibe um erro no console em caso de falha
-            console.log(err);
+            console.error('Erro no registro:', err)
         }
-    
-    
     }
-    static logout(req,res){
-        req.session.destroy()// Destoi a sessão do usuário
-        res.redirect('/login')//redireciona para o login
+
+    // Método para logout
+    static logout(req, res) {
+        req.session.destroy(() => {
+            res.redirect('/login'); // Redireciona para a página de login
+        });
     }
 };

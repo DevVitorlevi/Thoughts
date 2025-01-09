@@ -1,5 +1,6 @@
 const User = require('../models/User')
 const Tougth = require('../models/Thought')
+const Thought = require('../models/Thought')
 
 module.exports = class ThoughtController {
     static async allThought(req,res){
@@ -13,8 +14,19 @@ module.exports = class ThoughtController {
         res.render('thoughts/create')
     } 
     static async addThought(req,res){
-        const title = req.body
-        await User.create({title})
-        res.redirect('/thoughts')
+        const thought ={
+            title:req.body.title,
+            UserId:req.session.userid
+        }
+        try{
+            await Thought.create(thought)
+            req.flash('message', 'Pensamento Criado Com Sucesso')
+            req.session.save(()=>{
+                res.redirect('/thoughts/dashboard')
+            })
+        }
+        catch(err){
+            console.log(err)
+        }
     }
 }
