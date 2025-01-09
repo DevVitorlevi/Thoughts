@@ -1,6 +1,10 @@
 <link rel="stylesheet" href="/css/home.css">
-<h1>Todos os Pensamentos</h1>
+<h1>Conheça alguns dos nossos <span id="pensamento">Pensamentos</span></h1>
+<div class="thought-content">
 {{#each AllThoughts}}
-    <p>"{{this.title}}"</p>
-    <p>{{this.User.name}}</p>
+        <div class="text">
+            <h2 class="titulo">"{{this.title}}"</h2>
+            <p>Por:<span class="user"> {{this.User.name}}</span></p>
+        </div>
 {{/each}}
+</div>
