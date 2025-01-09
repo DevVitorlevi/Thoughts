@@ -9,28 +9,28 @@ module.exports = class AuthController {
     
     // Método para exibir a página de login
     static login(req, res) {
-        res.render('/login'); // Renderiza a página de login
+        res.render('auth/login'); // Renderiza a página de login
     }
-    // static async loginPost(req,res){
-    //     const {email,password} = req.body
+    static async loginPost(req,res){
+        const {email,password} = req.body
 
-    //     const user = await User.findOne({where:{email:email}})
+        const user = await User.findOne({where:{email:email}})// faz uma query em busca do email do usuário
 
-    //     if(!user){
-    //         req.flash('message', 'Usuário nn Encontrado')
-    //         res.render('auth/login')
+        if(!user){
+            req.flash('message', 'Usuário Não Encontrado')
+            res.render('auth/login')
 
-    //         return
-    //     }
+            return
+        }
 
-    //     const PasswordMatch = bcrypt.compareSync(password, user.password)
+        const PasswordMatch = bcrypt.compareSync(password, user.password)
 
-    //     if(!PasswordMatch){
-    //         req.flash('message','Senha incorreta')
-    //         res.render('auth/login')
-    //         return
-    //     }
-    // }
+        if(!PasswordMatch){
+            req.flash('message','Senha Incorreta')
+            res.render('auth/login')
+            return
+        }
+    }
 
 
     // Método para exibir a página de registro
