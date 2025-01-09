@@ -26,7 +26,49 @@
 }
 h2{
     font-size: 30px;
-    padding: 20px;
+    padding: 10px;
     color: white;
     font-family: "Abel", serif; 
+}
+.content{
+    display: flex;
+    flex-direction: row;
+    color: white;
+    gap:10px;   
+    flex-wrap: wrap;
+    word-wrap: break-word;
+    text-overflow: ellipsis; /* Adiciona "..." ao texto cortado */
+}
+
+.thought{
+    border-radius: 10px;
+    border: 1px solid goldenrod;
+    font-family: "Abel", serif; 
+    margin: 10px;
+    padding: 20px;
+    text-align: center;
+    width: 40%; 
+}
+.thought h1{
+    margin-bottom: 10px;
+}
+#action{
+    display: flex;
+    gap: 10px;
+    justify-content: center ;
+}
+button{
+    background-color: transparent;
+    border: 1px solid goldenrod;
+    padding: 10px;
+    width: 60px;
+    border-radius: 10px;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+    
+}
+button >a {
+    text-decoration: none;
+    color: white;
 }
