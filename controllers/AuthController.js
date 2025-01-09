@@ -95,7 +95,8 @@ module.exports = class AuthController {
     
     
     }
-    static async account(req,res){
-        
+    static logout(req,res){
+        req.session.destroy()// Destoi a sessão do usuário
+        res.redirect('/login')//redireciona para o login
     }
 };
