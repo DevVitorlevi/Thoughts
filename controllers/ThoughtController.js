@@ -3,8 +3,11 @@ const Thought = require('../models/Thought')
 
 module.exports = class ThoughtController {
     static async allThought(req,res){
-        
-        res.render('thoughts/home')
+        const thoughtsData = await Thought.findAll({include:User})
+
+        const AllThoughts = thoughtsData.map(thought => thought.get({plain:true}))
+
+        res.render('thoughts/home', {AllThoughts})
     }
     static async dashboard(req, res) {
         const userid = req.session.userid;

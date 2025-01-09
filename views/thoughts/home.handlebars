@@ -1,2 +1,6 @@
 <link rel="stylesheet" href="/css/home.css">
 <h1>Todos os Pensamentos</h1>
+{{#each AllThoughts}}
+    <p>"{{this.title}}"</p>
+    <p>{{this.User.name}}</p>
+{{/each}}
