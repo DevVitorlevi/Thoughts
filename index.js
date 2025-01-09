@@ -14,8 +14,8 @@ const AuthRoutes = require("./routers/AuthRoutes"); // Rotas relacionadas à aut
 const app = express();
 
 // Configuração do Handlebars como motor de templates
-app.engine('handlebars', exphbs.engine()); // Define o Handlebars como o motor de templates
-app.set('view engine', 'handlebars'); // Configura o Handlebars como padrão para renderização de views
+app.engine('handlebars', exphbs.engine());
+app.set('view engine', 'handlebars');
 
 // Middleware para processar dados enviados pelo cliente
 app.use(express.urlencoded({ extended: true })); // Permite processar dados de formulários enviados via POST
@@ -59,6 +59,6 @@ app.use('/thoughts', ThoughtRouters); // Rotas relacionadas a pensamentos (ex.: 
 app.use('/', AuthRoutes); // Rotas relacionadas à autenticação (ex.: login, registro)
 
 // Conecta ao banco de dados e inicia o servidor
-conn.sync() // Sincroniza os modelos com o banco de dados
+conn.sync({force:true}) // Sincroniza os modelos com o banco de dados
     .then(() => app.listen(3000)) // Inicia o servidor na porta 3000 após conectar ao banco
     .catch(e => console.log(e)); // Exibe um erro no console caso a conexão falhe

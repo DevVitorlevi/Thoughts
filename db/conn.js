@@ -2,7 +2,7 @@
 const { Sequelize } = require('sequelize')
 
 // Cria uma instância de conexão com o banco de dados.
-const sequelize = new Sequelize('toughts', 'root', '', { // Define os parâmetros de conexão.
+const sequelize = new Sequelize('thoughts', 'root', '', { // Define os parâmetros de conexão.
     host: 'localhost', // O endereço do servidor do banco de dados (neste caso, local).
     port: 3306, // A porta padrão do MySQL.
     dialect: 'mysql' // Especifica o tipo de banco de dados usado.
