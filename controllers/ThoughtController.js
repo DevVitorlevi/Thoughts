@@ -1,5 +1,4 @@
 const User = require('../models/User')
-const Tougth = require('../models/Thought')
 const Thought = require('../models/Thought')
 
 module.exports = class ThoughtController {
@@ -7,8 +6,21 @@ module.exports = class ThoughtController {
         
         res.render('thoughts/home')
     }
-    static async dashboard(req,res){
-        res.render('thoughts/dashboard')
+    static async dashboard(req, res) {
+        const userid = req.session.userid;
+                // Busca o usuário e seus pensamentos relacionados
+            const user = await User.findOne({
+                where: { id: userid },
+                include: Thought, // Inclui os pensamentos relacionados ao usuário
+                plain: true, // Retorna apenas o objeto puro
+            });
+                if(!user){
+                    req.redirect('/login')
+                }
+            // Verifica se o usuário possui pensamentos relacionados
+            const thoughts = user.Thoughts.map (thought => thought.dataValues);
+    
+            res.render('thoughts/dashboard', { thoughts });
     }
     static  createThought(req,res){
         res.render('thoughts/create')
@@ -32,5 +44,7 @@ module.exports = class ThoughtController {
             });
         }
     }
+
+
     
 }

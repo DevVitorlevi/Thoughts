@@ -3,4 +3,9 @@
 <div class="actions"><a href="/thoughts/create" id="thoughts">No que está Pensando?</a></div>
 <div class="thoughts">
     <h2>Seus Pensamentos</h2>
+    <ul>
+        {{#each thoughts}}
+        <li>{{this.title}}</li>
+        {{/each}}
+    </ul>
 </div>
