@@ -6,10 +6,20 @@ module.exports = class ThoughtController {
 
         let search = ''
 
+        let order = 'DESC'
+        if(req.query.order ==='old'){
+            order = 'ASC'
+        }else{
+            order ='DESC'
+        }
         if(req.query.search){
             search = req.query.search
         }
-        const thoughtsData = await Thought.findAll({include:User,where:{title:{[Op.like]:`%${search}%`}}})
+        const thoughtsData = await Thought.findAll(
+        {include:User,
+            where:{title:{[Op.like]:`%${search}%`}},
+            order:[['createdAt',order]]
+        })
 
         const AllThoughts = thoughtsData.map(thought => thought.get({plain:true}))
         let thoughtsqnt = AllThoughts.length
