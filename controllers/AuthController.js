@@ -96,6 +96,14 @@ module.exports = class AuthController {
         }
     }
 
+    static async Account(req,res){
+        const id = req.params.id 
+        console.log(id)
+        const UserData = await User.findOne({where:{id},raw:true})
+ 
+        res.render('auth/account', {UserData})
+    }
+
     // Método para logout do usuário
     static logout(req, res) {
         // Destroi a sessão e redireciona para a página de login

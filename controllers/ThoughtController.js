@@ -120,13 +120,12 @@ module.exports = class ThoughtController {
     // Método para atualizar um pensamento existente
     static async updateThought(req, res) {
         const id = req.body.id; // ID do pensamento vindo do formulário
-        const userid = req.session.userid; // ID do usuário na sessão
         const Data = {
             title: req.body.title, // Novo título vindo do formulário
         };
 
         // Atualiza o pensamento no banco de dados
-        await Thought.update(Data, { where: { id, userid } });
+        await Thought.update(Data, { where: { id } });
 
         // Redireciona para o painel
         res.redirect('/thoughts/dashboard');

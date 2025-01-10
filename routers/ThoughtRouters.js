@@ -11,5 +11,4 @@ router.post('/delete',checkAuth,ThoughtController.deleteThought)
 router.get('/edit/:id', checkAuth, ThoughtController.editThought)
 router.post('/update',checkAuth, ThoughtController.updateThought)
 
-
 module.exports = router
