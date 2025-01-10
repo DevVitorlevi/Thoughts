@@ -1,6 +1,11 @@
 <link rel="stylesheet" href="/css/home.css">
 {{#if search}}
     <h1>Voce Procura por: <span class="pensamento">{{search}}</span></h1>
+    {{#if thoughtsqnt}}
+        <p class="result">Foram Encontrado <span class="pensamento">{{thoughtsqnt}}</span> resultados</p>
+    {{else}}
+        <p class="result">Nenhum Resultado Encontrado</p>
+    {{/if}}
 {{else}}
     <h1>Conheça alguns dos nossos <span class="pensamento">Pensamentos</span></h1>
 {{/if}}
@@ -22,7 +27,7 @@
             <input type="hidden" name="order" value="old">
             <button type="submit"><i class="bi bi-arrow-down"></i><span>Mais Antigos</span></button>
         </form>
-        <a href="/">Limpar</a>
+        <a href="/thoughts">Limpar</a>
     </div>
 <div class="thought-content">
 {{#each AllThoughts}}
