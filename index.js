@@ -58,7 +58,10 @@ app.use((req, res, next) => {
 app.use('/thoughts', ThoughtRouters); // Rotas relacionadas a pensamentos (ex.: criação, exibição)
 app.use('/', AuthRoutes); // Rotas relacionadas à autenticação (ex.: login, registro)
 
+const PORT = process.env.PORT || 3000; // Mude para 3001 ou outra porta
 // Conecta ao banco de dados e inicia o servidor
 conn.sync() // Sincroniza os modelos com o banco de dados
-    .then(() => app.listen(3000)) // Inicia o servidor na porta 3000 após conectar ao banco
+    .then(() => app.listen(PORT)) // Inicia o servidor na porta 3000 após conectar ao banco
     .catch(e => console.log(e)); // Exibe um erro no console caso a conexão falhe
+
+    

@@ -1,5 +1,29 @@
 <link rel="stylesheet" href="/css/home.css">
-<h1>Conheça alguns dos nossos <span id="pensamento">Pensamentos</span></h1>
+{{#if search}}
+    <h1>Voce Procura por: <span class="pensamento">{{search}}</span></h1>
+{{else}}
+    <h1>Conheça alguns dos nossos <span class="pensamento">Pensamentos</span></h1>
+{{/if}}
+    <div class="busca">
+        <form>
+                <input type="text" name="search" placeholder="Está Procurando Algo?">
+                <button type="submit">Buscar</button>
+        </form>
+    </div>
+    <div class="order-container">
+        <span>Odernar Por: </span>
+        <form>
+            <input type="hidden" name="search" value="{{this.search}}">
+            <input type="hidden" name="order" value="new">
+            <button type="submit"><i class="bi bi-arrow-up"></i><span>Mais Novos</span></button>
+        </form>
+        <form>
+            <input type="hidden" name="search" value="{{this.search}}">
+            <input type="hidden" name="order" value="old">
+            <button type="submit"><i class="bi bi-arrow-down"></i><span>Mais Antigos</span></button>
+        </form>
+        <a href="/">Limpar</a>
+    </div>
 <div class="thought-content">
 {{#each AllThoughts}}
         <div class="text">
